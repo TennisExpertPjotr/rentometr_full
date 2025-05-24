@@ -1,0 +1,467 @@
+html {
+    box-sizing: border-box;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  img {
+    max-width: 100%;
+  }
+  
+  /* fonts */
+  @font-face {
+    font-family: "Montserrat";
+    src: local("Montserrat-Regular"),
+         url("../fonts/Montserrat-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Montserrat";
+    src: local("Montserrat-Medium"),
+         url("../fonts/Montserrat-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Montserrat";
+    src: local("Montserrat-SemiBold"),
+         url("../fonts/Montserrat-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Montserrat";
+    src: local("Montserrat-ExtraLight"),
+         url("../fonts/Montserrat-ExtraLight.ttf") format("truetype");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Montserrat";
+    src: local("Montserrat-Black"),
+         url("../fonts/Montserrat-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    font-family: Montserrat, sans-serif;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+  }
+
+  .logo {
+    margin: 0;
+    margin-left: 15px;
+    padding: 0;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  /*hero*/
+  .hero {
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    height: 440px;
+    border-radius: 15px;
+    background-image: url(../img/bg-image.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-bottom: 18px;
+  }
+
+  .hero-text-block {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 24px 36px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 18px;
+    white-space: nowrap;
+    width: fit-content;
+    max-width: 90%;
+  }
+
+  @media (max-width: 600px) {
+    .hero-text-block {
+      white-space: unset;
+    }
+  }
+
+  .hero-text {
+    margin: 0;
+    padding: 0;
+  }
+
+  .room-form {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+  }
+  
+  .room-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 10px;
+    padding-right: 38px;
+    margin-bottom: 40px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .room-buttons {
+    position: relative;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .room-btn {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    border: none;
+    background: transparent;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .room-indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    background-color: #e5e5e5;
+    border-radius: 8px;
+    z-index: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .room-btn.active {
+    background-color: #e5e5e5;
+  }
+  
+  .divider {
+    flex: 0 0 1px;
+    height: 36px;
+    background: #ddd;
+    margin: 0 4px;
+  }
+  
+  .area-input {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .area-input input {
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    max-width: 160px;
+    text-align: center;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .area-input input:focus {
+    outline: none;
+  }
+  
+  .unit {
+    font-size: 24px;
+    color: #000;
+  }
+
+  .form-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  
+  .form-block {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    flex: 1;
+  }
+
+  .form-block:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      width: 100%;
+      padding: 0 8px;
+    }
+
+    .form-block {
+      width: 100%;
+    }
+
+    .form-row {
+      flex-direction: column;
+    }
+  }
+
+  .form-block-label {
+    margin-left: 12px;
+    font-size: 20px;
+    font-weight: 200;
+  }
+
+  .form-block-input {
+    min-height: 50px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    font-size: 20px;
+    outline: none;
+    background-color: white;
+    width: 100%;
+    box-sizing: border-box;
+    
+    /* Убираем стандартные стили для select (если нужно) */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+
+  .form-block-input:focus {
+    border: 2px solid #987B66;
+}
+
+.al-center {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-option:not(:last-child) {
+  margin-right: 12px;
+}
+
+.radio-option input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+}
+
+.radio-custom {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  margin-right: 8px;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.radio-custom::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #987B66;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom {
+  border-color: #987B66;
+}
+
+.radio-option input[type="radio"]:checked + .radio-custom::after {
+  opacity: 1;
+}
+
+.radio-text {
+  font-size: 20px;
+  user-select: none;
+}
+
+.radio-opts {
+  display: flex;
+  flex-direction: row;
+  min-height: 50px;
+  align-items: center;
+}
+
+.metro-selector {
+  max-width: 400px;
+}
+
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 20px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+optgroup {
+  font-weight: bold;
+  color: #555;
+  font-size: 14px;
+}
+
+option {
+  position: relative;
+  padding: 8px 15px 8px 35px;
+  font-size: 18px;
+}
+
+option::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--line-color);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.home-info {
+  margin-bottom: 60px;
+}
+
+.submit-btn {
+  min-height: 50px;
+  border-radius: 12px;
+  width: 100%;
+  color: #fff;
+  background-color: #987B66;
+  border: none;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #7d5d46;
+  transition: 0.3s;
+}
+
+.footer {
+  padding: 20px 18px;
+  color: #fff;
+  background-color: #000;
+  font-weight: 500;
+}
+
+.rights {
+  background-color: #000;
+  font-weight: 400;
+}
+
+.deco {
+  height: 60px;
+  background-image: url(../img/home-deco.png);
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-position: calc(100% - 30px) calc(100% + 15px);
+}
+
+.gradient-select {
+  border-radius: 12px;
+  color: #fff;
+  background-color: #000;
+}
+
+.gradient-select-container {
+  position: relative;
+  padding: 3px;
+  background: linear-gradient(90deg, #03a9f4, #f441a5);
+  border-radius: 15px;
+  transition: all 0.4s ease;
+  
+}
+
+.predicted-price {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 200;
+
+    background-color: #184B44;
+}
+
+.price-label {
+    margin: 0;
+    margin-bottom: 12px;
+    padding: 0;
+}
+
+.price-value {
+    font-size: 30px;
+    font-weight: 900;
+}
+
+
+
+
+  

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/normalize.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <title>Рентометр</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">рентометр</h1>
+        </div>
+        <div class="hero">
+            <div class="hero-text-block">
+                <h2 class="hero-text">
+                    Оценка квартиры в Санкт-Петербурге
+                </h2>
+            </div>
+        </div>
+        <form class="room-form">
+            <div class="room-selector">
+              <div class="room-buttons">
+                <div class="room-indicator"></div>
+                <label><button type="button" class="room-btn">Студия</button></label>
+                <label><button type="button" class="room-btn active">1</button></label>
+                <label><button type="button" class="room-btn">2</button></label>
+                <label><button type="button" class="room-btn">3</button></label>
+                <label><button type="button" class="room-btn">4+</button></label>
+              </div>
+          
+              <span class="divider"></span>
+          
+              <label class="area-input">
+                <input type="number" step="0.01" min="0" max="1000" name="total_meters" placeholder="26.5" required>
+                <span class="unit">м²</span>
+              </label>
+            </div>
+            <div class="address">
+                <div class="form-row">
+                    <div class="form-block">
+                        <label class="form-block-label">Район</label>
+                        <select class="form-block-input" name="district">
+                            <option>Центральный</option>
+                            <option>Петроградский</option>
+                            <option>Адмиралтейский</option>
+                        </select>
+                    </div>
+                    <div class="form-block">
+                        <label class="form-block-label">Улица</label>
+                        <input class="form-block-input" type="text" name="street" required>
+                    </div>
+                </div>
+            </div>
+            <div class="home-info" id="homeInfo">
+                <div class="form-row">
+                    <div class="form-block">
+                        <label class="form-block-label al-center">Номер дома</label>
+                        <input class="form-block-input al-center" type="text" name="house_number"
+                        required>
+                    </div>
+                    <div class="form-block">
+                        <label class="form-block-label al-center">Этаж</label>
+                        <input class="form-block-input al-center" type="number"
+                        min="0" max="1024" name="floor" required>
+                    </div>
+                    <div class="form-block">
+                        <label class="form-block-label al-center">Всего этажей</label>
+                        <input class="form-block-input al-center" type="number" name="total_floors"
+                        min="1" max="1024" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-block">
+                        <label class="form-block-label">Материал дома</label>
+                        <select class="form-block-input" name="house_material">
+                            <option>Кирпичный</option>
+                            <option>Панелька</option>
+                        </select>
+                    </div>
+                    <div class="form-block">
+                        <label class="form-block-label">Есть балкон?</label>
+                        <div class="radio-opts">
+                            <label class="radio-option">
+                                <input type="radio" name="balcony" value="1" checked>
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">Да</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="balcony" value="0">
+                                <span class="radio-custom"></span>
+                                <span class="radio-text">Нет</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-block">
+                        <label class="form-block-label">Станция метро</label>
+                        <select class="form-block-input" id="metro_station">
+                            <option value="" disabled selected>Выберите станцию</option>
+                            
+                            <!-- Красная линия (1) -->
+                            <optgroup label="Кировско-Выборгская (Красная) линия (1)">
+                                <option value="devjatkino" data-line-color="#D6083B">Девяткино</option>
+                                <option value="grajdanskij" data-line-color="#D6083B">Гражданский проспект</option>
+                                <option value="akademicheskaja" data-line-color="#D6083B">Академическая</option>
+                                <option value="politehnicheskaja" data-line-color="#D6083B">Политехническая</option>
+                                <option value="ploshhad-muzhestva" data-line-color="#D6083B">Площадь Мужества</option>
+                                <option value="lesnaja" data-line-color="#D6083B">Лесная</option>
+                                <option value="vyborgskaja" data-line-color="#D6083B">Выборгская</option>
+                                <option value="ploshhad-lenina" data-line-color="#D6083B">Площадь Ленина</option>
+                                <option value="chernyshevskaja" data-line-color="#D6083B">Чернышевская</option>
+                                <option value="ploshhad-vosstanija" data-line-color="#D6083B">Площадь Восстания</option>
+                                <option value="vladimirskaja" data-line-color="#D6083B">Владимирская</option>
+                                <option value="pushkinskaja" data-line-color="#D6083B">Пушкинская</option>
+                                <option value="tehnologicheskij-institut-1" data-line-color="#D6083B">Технологический институт-1</option>
+                                <option value="baltijskaja" data-line-color="#D6083B">Балтийская</option>
+                                <option value="narvskaja" data-line-color="#D6083B">Нарвская</option>
+                                <option value="kirovskij-zavod" data-line-color="#D6083B">Кировский завод</option>
+                                <option value="avtovo" data-line-color="#D6083B">Автово</option>
+                                <option value="leninskij-prospekt" data-line-color="#D6083B">Ленинский проспект</option>
+                                <option value="prospekt-veteranov" data-line-color="#D6083B">Проспект Ветеранов</option>
+                            </optgroup>
+                            
+                            <!-- Синяя линия (2) -->
+                            <optgroup label="Московско-Петроградская (Синяя) линия (2)">
+                                <option value="parnas" data-line-color="#0C63E7">Парнас</option>
+                                <option value="prospekt-prosveshhenija" data-line-color="#0C63E7">Проспект Просвещения</option>
+                                <option value="ozerki" data-line-color="#0C63E7">Озерки</option>
+                                <option value="udelnaja" data-line-color="#0C63E7">Удельная</option>
+                                <option value="pionerskaja" data-line-color="#0C63E7">Пионерская</option>
+                                <option value="chernaja-rechka" data-line-color="#0C63E7">Чёрная речка</option>
+                                <option value="petrogradskaja" data-line-color="#0C63E7">Петроградская</option>
+                                <option value="gorkovskaja" data-line-color="#0C63E7">Горьковская</option>
+                                <option value="nevskij-prospekt" data-line-color="#0C63E7">Невский проспект</option>
+                                <option value="sennaja-ploshhad" data-line-color="#0C63E7">Сенная площадь</option>
+                                <option value="tehnologicheskij-institut-2" data-line-color="#0C63E7">Технологический институт-2</option>
+                                <option value="frunzenskaja" data-line-color="#0C63E7">Фрунзенская</option>
+                                <option value="moskovskie-vorota" data-line-color="#0C63E7">Московские ворота</option>
+                                <option value="elektrosila" data-line-color="#0C63E7">Электросила</option>
+                                <option value="park-pobedy" data-line-color="#0C63E7">Парк Победы</option>
+                                <option value="moskovskaja" data-line-color="#0C63E7">Московская</option>
+                                <option value="zvezdnaja" data-line-color="#0C63E7">Звёздная</option>
+                                <option value="kupchino" data-line-color="#0C63E7">Купчино</option>
+                            </optgroup>
+                            
+                            <!-- Зелёная линия (3) -->
+                            <optgroup label="Невско-Василеостровская (Зелёная) линия (3)">
+                                <option value="begovaja" data-line-color="#2DA343">Беговая</option>
+                                <option value="primorskaja" data-line-color="#2DA343">Приморская</option>
+                                <option value="vasileostrovskaja" data-line-color="#2DA343">Василеостровская</option>
+                                <option value="gostinyj-dvor-3" data-line-color="#2DA343">Гостиный двор</option>
+                                <option value="majakovskaja" data-line-color="#2DA343">Маяковская</option>
+                                <option value="ploshhad-aleksandra-nevskogo-3" data-line-color="#2DA343">Площадь Александра Невского</option>
+                                <option value="elizarovskaja" data-line-color="#2DA343">Елизаровская</option>
+                                <option value="lomonosovskaja" data-line-color="#2DA343">Ломоносовская</option>
+                                <option value="proletarskaja" data-line-color="#2DA343">Пролетарская</option>
+                                <option value="obuhovo" data-line-color="#2DA343">Обухово</option>
+                                <option value="rybackoe" data-line-color="#2DA343">Рыбацкое</option>
+                            </optgroup>
+                            
+                            <!-- Оранжевая линия (4) -->
+                            <optgroup label="Правобережная (Оранжевая) линия (4)">
+                                <option value="gornyj" data-line-color="#E67E22">Горный Институт</option>
+                                <option value="spasskaja" data-line-color="#E67E22">Спасская</option>
+                                <option value="dostoevskaja" data-line-color="#E67E22">Достоевская</option>
+                                <option value="ligovskij-prospekt" data-line-color="#E67E22">Лиговский проспект</option>
+                                <option value="ploshhad-aleksandra-nevskogo-4" data-line-color="#E67E22">Площадь Александра Невского</option>
+                                <option value="novocherkasskaja" data-line-color="#E67E22">Новочеркасская</option>
+                                <option value="ladozhskaja" data-line-color="#E67E22">Ладожская</option>
+                                <option value="prospekt-bolshevikov" data-line-color="#E67E22">Проспект Большевиков</option>
+                                <option value="ulica-dybenko" data-line-color="#E67E22">Улица Дыбенко</option>
+                            </optgroup>
+                            
+                            <!-- Фиолетовая линия (5) -->
+                            <optgroup label="Фрунзенско-Приморская (Фиолетовая) линия (5)">
+                                <option value="komendantskij-prospekt" data-line-color="#8E44AD">Комендантский проспект</option>
+                                <option value="staraja-derevnja" data-line-color="#8E44AD">Старая Деревня</option>
+                                <option value="krestovskij-ostrov" data-line-color="#8E44AD">Крестовский остров</option>
+                                <option value="chkalovskaja" data-line-color="#8E44AD">Чкаловская</option>
+                                <option value="sportivnaja" data-line-color="#8E44AD">Спортивная</option>
+                                <option value="admiraltejskaja" data-line-color="#8E44AD">Адмиралтейская</option>
+                                <option value="sadovaja" data-line-color="#8E44AD">Садовая</option>
+                                <option value="zvenigorodskaja" data-line-color="#8E44AD">Звенигородская</option>
+                                <option value="obvodnyj-kanal" data-line-color="#8E44AD">Обводный канал</option>
+                                <option value="volkovskaja" data-line-color="#8E44AD">Волковская</option>
+                                <option value="buharestskaja" data-line-color="#8E44AD">Бухарестская</option>
+                                <option value="mezhdunarodnaja" data-line-color="#8E44AD">Международная</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="result-container" id="resultContainer" style="display: none;">
+                <div class="predicted-price">
+                    <h3 class="price-label">Предсказанная стоимость аренды:</h3>
+                    <span class="price-value" id="predictedPrice">0</span> ₽/мес
+                </div>
+            </div>
+            <div class="submit-wrapper">
+                <div class="form-row">
+                    <div class="form-block">
+                        <div class="gradient-select-container">
+                            <select class="gradient-select al-center" id="ml_model">
+                              <option value="0">Linear Model</option>
+                              <option value="1">Logistic Model</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-block">
+                        <button type="submit" class="submit-btn" id="submitBtn">Оценить</button>
+                    </div>
+                </div>
+            </div>
+          </form>
+          <div class="deco"></div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <h3 class="rights">(c) 2025</h3>
+        </div>
+    </div>
+    <script>
+        const buttons = document.querySelectorAll('.room-btn');
+        const indicator = document.querySelector('.room-indicator');
+
+        function moveIndicator(button) {
+            const parent = button.parentElement.parentElement;
+            const rect = button.getBoundingClientRect();
+            const parentRect = parent.getBoundingClientRect();
+
+            const left = rect.left - parentRect.left;
+            const width = rect.width;
+
+            indicator.style.transform = `translateX(${left}px)`;
+            indicator.style.width = `${width}px`;
+        }
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            const active = document.querySelector('.room-btn.active');
+            if (active) moveIndicator(active);
+        });
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Убираем active мгновенно
+                buttons.forEach(b => b.classList.remove('active'));
+
+                // Двигаем фон
+                moveIndicator(button);
+
+                // Добавляем задержку перед установкой active
+                setTimeout(() => {
+                    button.classList.add('active');
+                }, 150); // Задержка чуть меньше transition (в CSS стоит 0.3s)
+            });
+        });
+    </script>
+    <script src="{{url_for('static', filename='js/form.js')}}"></script>
+</body>
+</html>
