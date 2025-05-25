@@ -59,6 +59,7 @@ venv.bak/
 
 # VS Code
 .vscode/
+.pylintrc
 
 # macOS
 .DS_Store

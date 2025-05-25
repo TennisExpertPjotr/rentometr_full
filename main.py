@@ -3,6 +3,8 @@ from data_processor import data_to_vector
 from linear_model import predict_with_ln
 from logistic_model import predict_with_lg
 
+import data_processor as dp
+
 app = Flask(__name__)
 app.secret_key = 'FBITFOREVERGUIRIKGROZOV'
 
@@ -44,4 +46,7 @@ def submit_form():
 
 
 if __name__ == '__main__':
+    # Обрабатываем и загружаем датасет
+    dp.FEATURES, dp.TARGET = dp.load_dataframe('MO_dataset.csv')
+    # Запускаем осонвное приложение
     app.run(debug=True)
