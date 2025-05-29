@@ -6,8 +6,8 @@ from typing import List
 
 '''
 Эта функция предсказывает стоимость найма квартиры при помощи
-модели линейной регрессии. Округляем с точностью до 1000 рублей.
+модели логистической регрессии. Округляем с точностью до 1000 рублей.
 '''
 def predict_with_lg(vector: List[float]) -> int:
     predicted_price = 27560
-    return round(predicted_price / 1000) * 1000
+    return round(predicted_price // 1000) * 1000
