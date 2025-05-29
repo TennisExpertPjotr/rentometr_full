@@ -1,28 +1,128 @@
 import pandas as pd
+import requests
+import math
 
+from dataclasses import dataclass
 from operator import le
 from typing import List, Dict, Any
+from functools import lru_cache
 
 
 # Здесь хранится обработанный dataframe из файла MO_dataset.csv
-FEATURES = None # признаки
-TARGET = None   # отклики
+FEATURES = None     # признаки
+TARGET = None       # отклики
 
+# Параметры и константы для API nominatim.org
+GEOAPI_BASE_URL = 'https://nominatim.openstreetmap.org/search'  # Базовый url API
+USER_AGENT = 'RentometrFull/1.0 (rentometr_full@itmo.ru)'       # API требует
+CITY = 'Санкт-Петербург'                                        # Город
+
+
+@dataclass
+class Coordinates:
+    lat: float
+    lon: float
+
+    def get_radian(self):
+        return RadCoordinates(
+            math.radians(self.lat), 
+            math.radians(self.lon)
+        )
+
+
+@dataclass
+class RadCoordinates:
+    lat: float
+    lon: float
+
+
+'''
+Данная функция вычисляет расстояние по формуле гавер синусов
+'''
+def gowers_distance(
+    c1: Coordinates,
+    c2: Coordinates
+) -> float:
+
+    c1r, c2r = c1.get_radian(), c2.get_radian()
+
+    dlat = c2r.lat - c1r.lat
+    dlon = c2r.lon - c1r.lon
+
+    # Формула гаверсинусов
+    a = math.sin(dlat/2)**2 + math.cos(c1r.lat) * math.cos(c2r.lat) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    # Радиус Земли
+    R = 6371
+
+    distance = R * c
+
+    return distance
+
+
+'''
+Данная функция возвращает координаты по адресу
+при помощи API nominatim.org
+'''
+@lru_cache(1000)
+def coordinates_from_address(
+        address: str
+) -> Coordinates | None:
+
+    # Параметры запроса
+    params = {'q': address, 'format': 'json', 'limit': 1, 'countrycodes': 'RU'}
+    headers = {'User-Agent': USER_AGENT}
+
+    # Выполнение запроса и проверка на наличие ошибки
+    try:
+        response = requests.get(GEOAPI_BASE_URL, params=params, headers=headers)
+        response.raise_for_status()
+        data = response.json()
+
+        if data:
+            lat = float(data[0]['lat'])
+            lon = float(data[0]['lon'])
+            return Coordinates(lat, lon)
+
+        else:
+            print('Адрес не найден')
+            return None
+
+    except requests.RequestException as e:
+        print(f'Ошибка запроса: {e}')
+        return None
 
 
 '''
 Данная функция рассчитывает расстояние от дома
-до метро в км при помощи открытого API (Нам
-показывали что-то подобное на ХИОДе)
+до метро в км при помощи API nominatim.org
 '''
 def distance_from_address(
-        district: str,
         street: str,
         house_number: str,
         metro_station: str
 ) -> float:
-    distance = 0.978
-    return distance
+
+    # Форматирование адресов
+    flat_address = f'{CITY}, {street}, {house_number}'
+    metro_address = f'{CITY}, станция метро {metro_station}'
+
+    # Получение координат и проверка на ошибку
+    try:
+        flat_coords = coordinates_from_address(flat_address)
+        metro_coords = coordinates_from_address(metro_address)
+
+        if (flat_coords and metro_coords):
+            distance = gowers_distance(flat_coords, metro_coords)
+            print(f'{street}, {house_number} to {metro_station}: {distance}')
+            return distance
+
+        else:
+            return None
+
+    except Exception as e:
+        print(f'Ошибка при расчёте: {e}')
 
 
 '''
@@ -30,7 +130,6 @@ def distance_from_address(
 '''
 def compute_distance(row):
     return distance_from_address(
-        row['district'],
         row['street'],
         row['house_number'],
         row['underground']
@@ -93,15 +192,13 @@ def data_to_vector(data: Dict[str, Any]) -> List[float]:
     metro_station = data['metro_station']
 
     # Расстояние до метро
-    distance = distance_from_address(
-        district, street, house_number, metro_station)
+    distance = distance_from_address(street, house_number, metro_station)
 
     house_material = data['house_material']
     room_type = data['room_type']
     total_meters = float(data['total_meters'])
     floor = float(data['floor'])
     total_floors = float(data['total_floors'])
-
 
     # Формируем DataFrame
     input_dict = {
@@ -114,6 +211,7 @@ def data_to_vector(data: Dict[str, Any]) -> List[float]:
         f'materials_{house_material}': 1,
         f'room_type_{room_type}': 1
     }
+
     # Все отсутствующие в row колонки заполняем нулями
     full_input_dict = {col: input_dict.get(col, 0) for col in FEATURES.columns.tolist()}
 
