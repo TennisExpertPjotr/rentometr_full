@@ -8,7 +8,7 @@
     <title>Рентометр</title>
 </head>
 <body>
-    <div class="container">
+    <div class="hero-container">
         <div class="header">
             <h1 class="logo">рентометр</h1>
         </div>
@@ -19,6 +19,8 @@
                 </h2>
             </div>
         </div>
+    </div>
+    <div class="container">
         <form class="room-form">
             <div class="room-selector">
               <div class="room-buttons">
@@ -71,17 +73,17 @@
             <div class="home-info" id="homeInfo">
                 <div class="form-row">
                     <div class="form-block">
-                        <label class="form-block-label al-center">Номер дома</label>
+                        <label class="form-block-label al-title">Номер дома</label>
                         <input class="form-block-input al-center" type="text" name="house_number"
                         required>
                     </div>
                     <div class="form-block">
-                        <label class="form-block-label al-center">Этаж</label>
+                        <label class="form-block-label al-title">Этаж</label>
                         <input class="form-block-input al-center" type="number"
                         min="0" max="1024" name="floor" required>
                     </div>
                     <div class="form-block">
-                        <label class="form-block-label al-center">Всего этажей</label>
+                        <label class="form-block-label al-title">Всего этажей</label>
                         <input class="form-block-input al-center" type="number" name="total_floors"
                         min="1" max="1024" required>
                     </div>
@@ -100,23 +102,6 @@
                             <option>щитовой</option>
                         </select>
                     </div>
-                    <div class="form-block">
-                        <label class="form-block-label">Есть балкон?</label>
-                        <div class="radio-opts">
-                            <label class="radio-option">
-                                <input type="radio" name="balcony" value="1" checked>
-                                <span class="radio-custom"></span>
-                                <span class="radio-text">Да</span>
-                            </label>
-                            <label class="radio-option">
-                                <input type="radio" name="balcony" value="0">
-                                <span class="radio-custom"></span>
-                                <span class="radio-text">Нет</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
                     <div class="form-block">
                         <label class="form-block-label">Станция метро</label>
                         <select class="form-block-input" id="metro_station">
@@ -215,9 +200,9 @@
                 </div>
             </div>
             <div class="result-container" id="resultContainer" style="display: none;">
-                <div class="predicted-price">
-                    <h3 class="price-label">Предсказанная стоимость аренды:</h3>
-                    <span class="price-value" id="predictedPrice">0</span> ₽/мес
+                <div class="predicted-price" id="textContainer">
+                    <h3 class="price-label" id="priceLabel">Предсказанная стоимость аренды:</h3>
+                    <span class="price-value" id="predictedPrice">0</span><span id="rub"></span>
                 </div>
             </div>
             <div class="submit-wrapper">
@@ -226,7 +211,6 @@
                         <div class="gradient-select-container">
                             <select class="gradient-select al-center" id="ml_model">
                               <option value="0">Linear Model</option>
-                              <option value="1">Logistic Model</option>
                             </select>
                         </div>
                     </div>
@@ -239,7 +223,7 @@
           <div class="deco"></div>
     </div>
     <div class="footer">
-        <div class="container">
+        <div class="container footer-container">
             <h3 class="rights">(c) 2025</h3>
         </div>
     </div>

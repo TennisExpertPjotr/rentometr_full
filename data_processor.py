@@ -7,6 +7,7 @@ from operator import le
 from typing import List, Dict, Any
 from functools import lru_cache
 
+from pandas import DataFrame
 
 # Здесь хранится обработанный dataframe из файла MO_dataset.csv
 FEATURES = None # признаки
@@ -181,7 +182,7 @@ def one_hot_encode(value: str, categories: List[str]) -> List[int]:
 фронта и возвращает удобный для модели числовой
 вектор
 '''
-def data_to_vector(data: Dict[str, Any]) -> List[float]:
+def data_to_vector(data: Dict[str, Any]) -> DataFrame | int:
     district = data['district']
     street = data['street']
     house_number = data['house_number']
@@ -189,6 +190,9 @@ def data_to_vector(data: Dict[str, Any]) -> List[float]:
 
     # Расстояние до метро
     distance = distance_from_address(street, house_number, metro_station)
+
+    if distance is None:
+        return {'error': 'address_not_found'}
 
     house_material = data['house_material']
     room_type = data['room_type']

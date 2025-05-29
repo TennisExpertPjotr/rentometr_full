@@ -10,7 +10,6 @@ document.querySelector('.room-form').addEventListener('submit', async function(e
         floor: document.querySelector('input[name="floor"]').value,
         total_floors: document.querySelector('input[name="total_floors"]').value,
         house_material: document.querySelector('select[name="house_material"]').value,
-        balcony: document.querySelector('input[name="balcony"]:checked').value,
         metro_station: document.querySelector('#metro_station').value,
         ml_model: document.querySelector('#ml_model').value
     };
@@ -35,9 +34,37 @@ document.querySelector('.room-form').addEventListener('submit', async function(e
 
             const resultContainer = document.getElementById('resultContainer');
             const priceElement = document.getElementById('predictedPrice');
+            const priceLabel = document.getElementById('priceLabel');
             const homeInfo = document.getElementById('homeInfo');
+            const container = document.getElementById('textContainer');
+            const rub = document.getElementById('rub');
+
+            rub.style.display = 'block';
 
             priceElement.textContent = formattedPrice;
+            container.style.backgroundColor = '#184B44';
+            priceLabel.textContent = "Предсказанная стоимость аренды:";
+            resultContainer.style.display = 'block';
+            homeInfo.style.marginBottom = '15px';
+
+            resultContainer.style.opacity = 0;
+            setTimeout(() => {
+                resultContainer.style.transition = 'opacity 0.5s ease';
+                resultContainer.style.opacity = 1;
+            }, 10);
+        } else if (result.status === 'naa') {
+            const resultContainer = document.getElementById('resultContainer');
+            const priceElement = document.getElementById('predictedPrice');
+            const priceLabel = document.getElementById('priceLabel');
+            const homeInfo = document.getElementById('homeInfo');
+            const container = document.getElementById('textContainer');
+            const rub = document.getElementById('rub');
+
+            rub.style.display = 'none';
+
+            priceElement.textContent = result.message;
+            container.style.backgroundColor = '#b32222';
+            priceLabel.textContent = "Ошибка:";
             resultContainer.style.display = 'block';
             homeInfo.style.marginBottom = '15px';
 

@@ -26,12 +26,21 @@ def submit_form():
 
         vector = data_to_vector(data)
 
+        if 'error' in vector:
+            if vector['error'] == 'address_not_found':
+                return jsonify({
+                    'status': 'naa',
+                    'message': 'Адрес не найден'
+                })
+
         predicted_price = -1
 
         if ml_model == '0':
             predicted_price = predict_with_ln(vector)
         elif ml_model == '1':
             predicted_price = predict_with_lg(vector)
+
+
 
         return jsonify({
             'status': 'success',
@@ -47,14 +56,14 @@ def submit_form():
 
 if __name__ == '__main__':
     # Обрабатываем и загружаем датасет
-    #dp.FEATURES, dp.TARGET = dp.load_dataframe('MO_dataset.csv')
-    
-    dp.FEATURES = dp.pd.read_csv('data\\features.csv', sep=',', index_col=0)
-    #print(dp.FEATURES["distance"].head())
-    dp.TARGET = dp.pd.read_csv('data\\targets.csv', sep=',', index_col=0)
-    
+    # dp.FEATURES, dp.TARGET = dp.load_dataframe('MO_dataset.csv')
+
+    dp.FEATURES = dp.pd.read_csv('data\\features_cleared.csv', sep=',')
+    print(dp.FEATURES["distance"].head())
+    dp.TARGET = dp.pd.read_csv('data\\targets_cleared.csv', sep=',')
+    print(dp.TARGET.head())
     # обучение моделей
     train_ln_model()
-    
+
     # Запускаем основное приложение
     app.run(debug=True)
