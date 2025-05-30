@@ -18,7 +18,7 @@ def train_ln_model():
 
     # Разделение на train/test
     X_train, X_test, y_train, y_test = train_test_split(
-        dp.FEATURES, dp.TARGET, test_size=0.2, random_state=42
+        dp.FEATURES, dp.TARGET, test_size=0.2, random_state=47
         )
 
     # Обучаем модель линейной регрессии
@@ -33,7 +33,7 @@ def train_ln_model():
     print(f"R² линейной регрессии: {score_linear:.2f}")
     mae = mean_absolute_error(y_test, y_pred)
     print(f"Средняя ошибка модели: {mae:.0f} руб.")
-    print("Модели успешно обучены!")
+    print("Модель успешно обучена!")
 
 
 '''
@@ -42,6 +42,9 @@ def train_ln_model():
 '''
 def predict_with_ln(vector) -> int:
     global linear_model
+
+    if linear_model is None:
+        raise ValueError("Модель линейной регрессии не обучена.")
 
     predicted_price = linear_model.predict(vector)
     #print(predicted_price)
