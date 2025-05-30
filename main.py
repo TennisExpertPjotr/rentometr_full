@@ -6,7 +6,7 @@ from logistic_model import predict_with_lg
 import data_processor as dp
 
 app = Flask(__name__)
-app.secret_key = 'FBITFOREVERGUIRIKGROZOV'
+app.secret_key = '<secret>'
 
 
 @app.route('/')

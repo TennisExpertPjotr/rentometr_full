@@ -493,8 +493,11 @@ option::before {
     margin-bottom: 14px;
   }
 
+  .room-buttons label {
+    flex-shrink: 1;
+  }
   .room-btn {
-    padding: 14px 22px;
+    padding: 14px 14px;
   }
 
   .divider {
