@@ -6,7 +6,7 @@ from logistic_model import predict_with_lg, train_lg_model
 import data_processor as dp
 
 app = Flask(__name__)
-app.secret_key = 'FBITFOREVERGUIRIKGROZOV'
+app.secret_key = '<secret>'
 
 
 @app.route('/')
@@ -26,12 +26,21 @@ def submit_form():
 
         vector = data_to_vector(data)
 
+        if 'error' in vector:
+            if vector['error'] == 'address_not_found':
+                return jsonify({
+                    'status': 'naa',
+                    'message': 'Адрес не найден'
+                })
+
         predicted_price = -1
 
         if ml_model == '0':
             predicted_price = predict_with_ln(vector)
         elif ml_model == '1':
             predicted_price = predict_with_lg(vector, 75000)
+
+
 
         return jsonify({
             'status': 'success',
