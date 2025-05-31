@@ -23,6 +23,8 @@ def submit_form():
 
         # Выбранная модель (0 - линейная или 1 - логистическая)
         ml_model = data.pop('ml_model', None)
+        c_price = data.pop('clients_price', None)
+        clients_price = float(c_price)
 
         vector = data_to_vector(data)
 
@@ -38,7 +40,7 @@ def submit_form():
         if ml_model == '0':
             predicted_price = predict_with_ln(vector)
         elif ml_model == '1':
-            predicted_price = predict_with_lg(vector, 75000)
+            predicted_price = predict_with_lg(vector, clients_price)
 
 
 
@@ -60,9 +62,7 @@ if __name__ == '__main__':
     
     dp.FEATURES = dp.pd.read_csv('data\\features_cleared.csv', sep=',')
     dp.FEATURES = dp.FEATURES.drop('Unnamed: 0', axis=1)
-    print(dp.FEATURES.head())
     dp.TARGET = dp.pd.read_csv('data\\targets_cleared.csv', sep=',')
-    print(dp.TARGET.head())
     # обучение моделей
     train_ln_model()
     train_lg_model()

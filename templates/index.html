@@ -198,6 +198,15 @@
 </select>
                     </div>
                 </div>
+                <div class="form-row">
+                    <div class="form-block">
+                        <label class="form-block-label">Ваша цена</label>
+                        <input class="form-block-input al-center" type="number" id="clients_price"
+                        min="0" max="100000000" required>
+                    </div>
+                    <div class="form-block brick">
+                    </div>
+                </div>
             </div>
             <div class="result-container" id="resultContainer" style="display: none;">
                 <div class="predicted-price" id="textContainer">
@@ -210,7 +219,8 @@
                     <div class="form-block">
                         <div class="gradient-select-container">
                             <select class="gradient-select al-center" id="ml_model">
-                              <option value="0">Linear Model</option>
+                                <option value="0">Linear Model</option>
+                                <option value="1">Logistic Model</option>
                             </select>
                         </div>
                     </div>

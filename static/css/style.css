@@ -548,6 +548,10 @@ option::before {
     .predicted-price {
         margin-bottom: 20px;
     }
+
+    .brick {
+        display: none;
+    }
   }
 
 
